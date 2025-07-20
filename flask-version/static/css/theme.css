@@ -1,0 +1,350 @@
+/* 
+ * 积分管理系统 - 统一主题样式
+ * 现代化多彩配色方案
+ */
+
+:root {
+    /* 主色调 - 深蓝紫色系 */
+    --primary-start: #1e3c72;
+    --primary-end: #2a5298;
+    --primary-dark: #1a2f5c;
+    --primary-light: #3d6bb3;
+    
+    /* 辅助色 - 青蓝色系 */
+    --secondary-start: #00c6ff;
+    --secondary-end: #0072ff;
+    --secondary-dark: #0056cc;
+    --secondary-light: #33d1ff;
+    
+    /* 强调色 - 橙粉色系 */
+    --accent-start: #ff6b6b;
+    --accent-end: #ffa726;
+    --accent-dark: #e55353;
+    --accent-light: #ff8a80;
+    
+    /* 成功色 - 绿色系 */
+    --success-start: #4caf50;
+    --success-end: #8bc34a;
+    --success-dark: #388e3c;
+    --success-light: #81c784;
+    
+    /* 警告色 - 黄橙色系 */
+    --warning-start: #ff9800;
+    --warning-end: #ffc107;
+    --warning-dark: #f57c00;
+    --warning-light: #ffb74d;
+    
+    /* 错误色 - 红色系 */
+    --error-start: #f44336;
+    --error-end: #e91e63;
+    --error-dark: #d32f2f;
+    --error-light: #ef5350;
+    
+    /* 信息色 - 蓝色系 */
+    --info-start: #2196f3;
+    --info-end: #03a9f4;
+    --info-dark: #1976d2;
+    --info-light: #64b5f6;
+    
+    /* 中性色 */
+    --neutral-50: #fafafa;
+    --neutral-100: #f8fafc;
+    --neutral-200: #e2e8f0;
+    --neutral-300: #cbd5e1;
+    --neutral-400: #94a3b8;
+    --neutral-500: #64748b;
+    --neutral-600: #475569;
+    --neutral-700: #334155;
+    --neutral-800: #1e293b;
+    --neutral-900: #0f172a;
+    
+    /* 渐变背景 */
+    --bg-primary: linear-gradient(135deg, var(--primary-start) 0%, var(--primary-end) 100%);
+    --bg-secondary: linear-gradient(135deg, var(--secondary-start) 0%, var(--secondary-end) 100%);
+    --bg-accent: linear-gradient(135deg, var(--accent-start) 0%, var(--accent-end) 100%);
+    --bg-success: linear-gradient(135deg, var(--success-start) 0%, var(--success-end) 100%);
+    --bg-warning: linear-gradient(135deg, var(--warning-start) 0%, var(--warning-end) 100%);
+    --bg-error: linear-gradient(135deg, var(--error-start) 0%, var(--error-end) 100%);
+    --bg-info: linear-gradient(135deg, var(--info-start) 0%, var(--info-end) 100%);
+    
+    /* 玻璃态效果 */
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-bg-light: rgba(255, 255, 255, 0.15);
+    --glass-bg-dark: rgba(0, 0, 0, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-border-light: rgba(255, 255, 255, 0.3);
+    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    
+    /* 阴影系统 */
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+    --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.25);
+    --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+    
+    /* 边框半径 */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-2xl: 20px;
+    --radius-3xl: 24px;
+    --radius-full: 9999px;
+    
+    /* 间距系统 */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.25rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-10: 2.5rem;
+    --space-12: 3rem;
+    --space-16: 4rem;
+    --space-20: 5rem;
+    --space-24: 6rem;
+    
+    /* 字体大小 */
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.25rem;
+    --text-2xl: 1.5rem;
+    --text-3xl: 1.875rem;
+    --text-4xl: 2.25rem;
+    --text-5xl: 3rem;
+    --text-6xl: 3.75rem;
+    
+    /* 字体粗细 */
+    --font-thin: 100;
+    --font-light: 300;
+    --font-normal: 400;
+    --font-medium: 500;
+    --font-semibold: 600;
+    --font-bold: 700;
+    --font-extrabold: 800;
+    --font-black: 900;
+    
+    /* 过渡动画 */
+    --transition-fast: 0.15s ease-out;
+    --transition-base: 0.3s ease-out;
+    --transition-slow: 0.5s ease-out;
+    --transition-all: all 0.3s ease-out;
+}
+
+/* 通用动态背景 */
+.dynamic-background {
+    position: relative;
+}
+
+.dynamic-background::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 107, 107, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(0, 198, 255, 0.2) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* 通用按钮样式 */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-6);
+    border: none;
+    border-radius: var(--radius-lg);
+    font-weight: var(--font-semibold);
+    font-size: var(--text-sm);
+    text-decoration: none;
+    cursor: pointer;
+    transition: var(--transition-all);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    transition: left 0.3s ease;
+    z-index: -1;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    text-decoration: none;
+}
+
+.btn:hover::before {
+    left: 0;
+}
+
+/* 按钮变体 */
+.btn-primary {
+    background: var(--bg-primary);
+    color: white;
+}
+
+.btn-primary::before {
+    background: var(--bg-secondary);
+}
+
+.btn-secondary {
+    background: var(--bg-secondary);
+    color: white;
+}
+
+.btn-secondary::before {
+    background: var(--bg-accent);
+}
+
+.btn-success {
+    background: var(--bg-success);
+    color: white;
+}
+
+.btn-success::before {
+    background: var(--success-dark);
+}
+
+.btn-warning {
+    background: var(--bg-warning);
+    color: white;
+}
+
+.btn-warning::before {
+    background: var(--warning-dark);
+}
+
+.btn-error {
+    background: var(--bg-error);
+    color: white;
+}
+
+.btn-error::before {
+    background: var(--error-dark);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid var(--glass-border);
+    color: white;
+    backdrop-filter: blur(10px);
+}
+
+.btn-outline::before {
+    background: var(--glass-bg);
+}
+
+/* 卡片样式 */
+.card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--glass-border);
+    transition: var(--transition-all);
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-2xl);
+}
+
+.card-glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    color: white;
+}
+
+/* 表单样式 */
+.form-group {
+    margin-bottom: var(--space-6);
+}
+
+.form-label {
+    display: block;
+    margin-bottom: var(--space-2);
+    font-weight: var(--font-semibold);
+    color: var(--neutral-700);
+}
+
+.form-input {
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    border: 2px solid var(--neutral-300);
+    border-radius: var(--radius-lg);
+    font-size: var(--text-base);
+    transition: var(--transition-all);
+    background: white;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--secondary-start);
+    box-shadow: 0 0 0 3px rgba(0, 198, 255, 0.1);
+}
+
+/* 状态消息样式 */
+.alert {
+    padding: var(--space-4) var(--space-6);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-6);
+    font-weight: var(--font-medium);
+    border: 1px solid transparent;
+}
+
+.alert-success {
+    background: rgba(76, 175, 80, 0.1);
+    color: var(--success-dark);
+    border-color: var(--success-light);
+}
+
+.alert-warning {
+    background: rgba(255, 152, 0, 0.1);
+    color: var(--warning-dark);
+    border-color: var(--warning-light);
+}
+
+.alert-error {
+    background: rgba(244, 67, 54, 0.1);
+    color: var(--error-dark);
+    border-color: var(--error-light);
+}
+
+.alert-info {
+    background: rgba(33, 150, 243, 0.1);
+    color: var(--info-dark);
+    border-color: var(--info-light);
+}
+
+/* 工具类 */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.font-bold { font-weight: var(--font-bold); }
+.font-semibold { font-weight: var(--font-semibold); }
+.font-medium { font-weight: var(--font-medium); }
+
+.text-white { color: white; }
+.text-primary { color: var(--primary-start); }
+.text-secondary { color: var(--secondary-start); }
+.text-success { color: var(--success-start); }
+.text-warning { color: var(--warning-start); }
+.text-error { color: var(--error-start); }

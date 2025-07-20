@@ -1,0 +1,43 @@
+{
+  "points_system": {
+    "min_duration_minutes": 40,
+    "points_per_day": 10,
+    "validity_days": 90,
+    "allow_duplicate_daily": false
+  },
+  "data_processing": {
+    "max_file_size_mb": 50,
+    "supported_formats": [
+      ".csv",
+      ".xlsx",
+      ".xls",
+      ".json",
+      ".tsv"
+    ],
+    "auto_clean_uploads_days": 7,
+    "batch_size": 1000
+  },
+  "display": {
+    "default_page_size": 10,
+    "max_page_size": 100,
+    "date_format": "%Y-%m-%d",
+    "datetime_format": "%Y-%m-%d %H:%M:%S"
+  },
+  "system": {
+    "session_timeout_hours": 24,
+    "max_login_attempts": 5,
+    "enable_registration": true,
+    "debug_mode": false
+  },
+  "meta": {
+    "version": "1.0.0",
+    "last_updated": "2025-07-20T20:41:35.365766",
+    "updated_by": "admin"
+  },
+  "qr_system": {
+    "validity_hours": -1,
+    "auto_clean_expired": false,
+    "clean_interval_hours": 6,
+    "max_cache_size": 1000
+  }
+}

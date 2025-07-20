@@ -11,28 +11,72 @@
 - 👥 **多用户隔离**: 不同管理员数据完全隔离
 - 📱 **响应式设计**: 完美适配桌面和移动设备
 
+## 🏗️ 项目结构
+
+```
+积分管理系统/
+├── 📁 flask-version/              # Flask传统版本
+│   ├── app.py                     # Flask主应用
+│   ├── users.csv                  # 用户数据
+│   ├── templates/                 # 页面模板
+│   ├── data/                      # 用户数据存储
+│   └── README.md                  # Flask版本说明
+├── 📁 cloudflare-version/         # Cloudflare现代版本
+│   ├── functions/                 # Workers Functions
+│   ├── dist/                      # 静态前端文件
+│   ├── schema.sql                 # D1数据库结构
+│   ├── wrangler.toml              # Cloudflare配置
+│   └── README.md                  # Cloudflare版本说明
+├── 📁 docs/                       # 项目文档
+│   ├── CLOUDFLARE_DEPLOYMENT.md   # Cloudflare部署指南
+│   ├── MIGRATION_GUIDE.md         # 迁移指南
+│   ├── HISTORICAL_DATA_GUIDE.md   # 历史数据处理
+│   └── PROJECT_STRUCTURE.md       # 项目结构说明
+├── 📁 .github/workflows/          # CI/CD配置
+│   └── deploy.yml                 # 自动部署工作流
+├── package.json                   # Node.js配置
+└── README.md                      # 项目主说明（本文件）
+```
+
 ## 🚀 快速开始
 
-### 环境要求
-- Python 3.7+
-- Flask
-- pandas
-- openpyxl
+### 方式一：Cloudflare Pages（推荐）
+现代化的无服务器部署，支持全球CDN加速：
 
-### 安装依赖
 ```bash
+cd cloudflare-version/
+
+# 1. 安装依赖
+npm install
+
+# 2. 登录Cloudflare
+npx wrangler login
+
+# 3. 创建资源并部署
+npm run setup && npm run deploy
+```
+
+详细说明：[cloudflare-version/README.md](./cloudflare-version/README.md)
+
+### 方式二：Flask本地部署
+传统的Python Flask部署方式：
+
+```bash
+cd flask-version/
+
+# 1. 安装依赖
 pip install flask pandas openpyxl
-```
 
-### 启动应用
-```bash
+# 2. 启动应用
 python app.py
+
+# 3. 访问系统
+# 浏览器打开: http://127.0.0.1:5000/
 ```
 
-### 访问系统
-打开浏览器访问: http://127.0.0.1:5000/
+详细说明：[flask-version/README.md](./flask-version/README.md)
 
-### 默认账户
+## 🔑 默认账户
 - 用户名: `admin`
 - 密码: `admin123`
 

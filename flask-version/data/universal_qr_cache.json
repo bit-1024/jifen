@@ -1,0 +1,9 @@
+{
+  "admin": {
+    "qr_url": "/static/qr_codes/general_query_qr.png",
+    "query_url": "http://127.0.0.1:5000/query",
+    "created_at": "2025-07-20T20:41:20.165758",
+    "expires_at": "永不过期",
+    "validity_hours": -1
+  }
+}
