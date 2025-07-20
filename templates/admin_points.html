@@ -45,6 +45,12 @@
             font-size: 16px;
             opacity: 0.9;
         }
+
+        .user-info {
+            font-size: 14px;
+            opacity: 0.8;
+            font-weight: 500;
+        }
         
         .content {
             padding: 30px;
@@ -120,34 +126,229 @@
             background-color: #f8f9ff;
         }
         
+        .number-cell {
+            font-weight: 600;
+            color: #6c757d;
+            text-align: center;
+            width: 60px;
+        }
+
         .user-id-cell {
             font-weight: 600;
             color: #667eea;
         }
-        
+
+        .user-name-cell {
+            font-weight: 500;
+            color: #495057;
+        }
+
         .points-cell {
             font-weight: 700;
             color: #28a745;
             font-size: 16px;
         }
-        
+
         .days-cell {
             font-weight: 500;
             color: #17a2b8;
         }
-        
+
         .date-cell {
             font-size: 12px;
             color: #666;
         }
-        
+
         .expire-warning {
             color: #dc3545;
             font-weight: 600;
         }
-        
+
         .expire-soon {
             color: #ffc107;
+            font-weight: 600;
+        }
+
+        /* 筛选表单样式 */
+        .filter-section {
+            background: #f8f9ff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 2px solid #e3e8ff;
+        }
+
+        .filter-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .filter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: end;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            min-width: 120px;
+        }
+
+        .filter-group label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .filter-group input,
+        .filter-group select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: flex-start;
+            flex-wrap: nowrap;
+            width: 100%;
+        }
+
+        .filter-button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            min-width: 100px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .primary-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .primary-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+            color: white;
+            text-decoration: none;
+        }
+
+        .reset-button {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+            color: white;
+        }
+
+        .reset-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(108, 117, 125, 0.4);
+            color: white;
+            text-decoration: none;
+        }
+
+        .button-icon {
+            font-size: 16px;
+        }
+
+        .button-text {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* 响应式按钮 */
+        @media (max-width: 768px) {
+            .button-group {
+                justify-content: center;
+                width: 100%;
+                flex-wrap: nowrap;
+            }
+
+            .filter-button {
+                flex: 1;
+                min-width: 100px;
+                max-width: 140px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .button-group {
+                gap: 8px;
+            }
+
+            .filter-button {
+                padding: 10px 16px;
+                font-size: 13px;
+                min-width: 90px;
+            }
+
+            .button-text {
+                font-size: 13px;
+            }
+        }
+
+        /* 分页样式 */
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding: 20px 0;
+            border-top: 1px solid #eee;
+        }
+
+        .pagination-info {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .pagination-controls {
+            display: flex;
+            gap: 5px;
+        }
+
+        .page-btn {
+            padding: 8px 12px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            color: #667eea;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .page-btn:hover {
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+        }
+
+        .page-btn.current {
+            background: #667eea;
+            color: white;
             font-weight: 600;
         }
         
@@ -223,15 +424,20 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1 class="main-title">积分管理</h1>
-            <div class="subtitle">查看积分历史和过期情况 (90天有效期)</div>
+            <h1 class="main-title">📊 积分管理</h1>
+            <div class="subtitle">
+                查看积分历史和过期情况 (90天有效期)
+                {% if current_user %}
+                <span class="user-info">| 当前用户：{{ current_user.username }}</span>
+                {% endif %}
+            </div>
         </div>
         
         <div class="content">
             <!-- 统计摘要 -->
             <div class="stats-summary">
                 <div class="stat-card">
-                    <div class="stat-number">{{ user_stats|length }}</div>
+                    <div class="stat-number">{{ total_records if total_records is defined else user_stats|length }}</div>
                     <div class="stat-label">活跃用户数</div>
                 </div>
                 <div class="stat-card">
@@ -247,6 +453,78 @@
                     <div class="stat-label">积分有效期(天)</div>
                 </div>
             </div>
+
+            <!-- 筛选和搜索 -->
+            <div class="filter-section">
+                <h3 class="filter-title">🔍 筛选和搜索</h3>
+                <form method="GET" class="filter-form">
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label for="search_user_id">用户ID:</label>
+                            <input type="text" id="search_user_id" name="search_user_id"
+                                   value="{{ search_params.search_user_id if search_params else '' }}"
+                                   placeholder="输入用户ID">
+                        </div>
+                        <div class="filter-group">
+                            <label for="search_user_name">用户昵称:</label>
+                            <input type="text" id="search_user_name" name="search_user_name"
+                                   value="{{ search_params.search_user_name if search_params else '' }}"
+                                   placeholder="输入用户昵称">
+                        </div>
+                        <div class="filter-group">
+                            <label for="min_points">最小积分:</label>
+                            <input type="number" id="min_points" name="min_points"
+                                   value="{{ search_params.min_points if search_params and search_params.min_points else '' }}"
+                                   placeholder="0">
+                        </div>
+                        <div class="filter-group">
+                            <label for="max_points">最大积分:</label>
+                            <input type="number" id="max_points" name="max_points"
+                                   value="{{ search_params.max_points if search_params and search_params.max_points else '' }}"
+                                   placeholder="100">
+                        </div>
+                    </div>
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label for="sort_by">排序字段:</label>
+                            <select id="sort_by" name="sort_by">
+                                <option value="TotalPoints" {{ 'selected' if search_params and search_params.sort_by == 'TotalPoints' else '' }}>总积分</option>
+                                <option value="UserID" {{ 'selected' if search_params and search_params.sort_by == 'UserID' else '' }}>用户ID</option>
+                                <option value="UserName" {{ 'selected' if search_params and search_params.sort_by == 'UserName' else '' }}>用户昵称</option>
+                                <option value="ValidDays" {{ 'selected' if search_params and search_params.sort_by == 'ValidDays' else '' }}>有效天数</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="sort_order">排序方式:</label>
+                            <select id="sort_order" name="sort_order">
+                                <option value="desc" {{ 'selected' if search_params and search_params.sort_order == 'desc' else '' }}>降序</option>
+                                <option value="asc" {{ 'selected' if search_params and search_params.sort_order == 'asc' else '' }}>升序</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="per_page">每页显示:</label>
+                            <select id="per_page" name="per_page">
+                                <option value="10" {{ 'selected' if per_page == 10 else '' }}>10条</option>
+                                <option value="20" {{ 'selected' if per_page == 20 else '' }}>20条</option>
+                                <option value="50" {{ 'selected' if per_page == 50 else '' }}>50条</option>
+                                <option value="100" {{ 'selected' if per_page == 100 else '' }}>100条</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <div class="button-group">
+                                <button type="submit" class="filter-button primary-button">
+                                    <span class="button-icon">🔍</span>
+                                    <span class="button-text">筛选</span>
+                                </button>
+                                <a href="/admin/points" class="filter-button reset-button">
+                                    <span class="button-icon">🔄</span>
+                                    <span class="button-text">重置</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
             
             <!-- 用户积分详情 -->
             <h2 class="section-title">📊 用户积分详情</h2>
@@ -256,30 +534,57 @@
                 <table class="data-table">
                     <thead>
                         <tr>
+                            <th>编号</th>
                             <th>用户ID</th>
+                            <th>用户昵称</th>
                             <th>总积分</th>
                             <th>有效天数</th>
-                            <th>首次获得</th>
-                            <th>最近获得</th>
-                            <th>最快过期</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for user in user_stats.sort_values('总积分', ascending=False).itertuples() %}
+                        {% for user in user_stats.itertuples() %}
                         <tr>
+                            <td class="number-cell">{{ loop.index + (current_page - 1) * per_page if current_page is defined and per_page is defined else loop.index }}</td>
                             <td class="user-id-cell">{{ user.UserID }}</td>
-                            <td class="points-cell">{{ user.总积分 }}</td>
-                            <td class="days-cell">{{ user.有效天数 }}</td>
-                            <td class="date-cell">{{ user.首次获得 }}</td>
-                            <td class="date-cell">{{ user.最近获得 }}</td>
-                            <td class="date-cell {% if user.最快过期 <= 7 %}expire-warning{% elif user.最快过期 <= 30 %}expire-soon{% endif %}">
-                                {{ user.最快过期 }}天后
-                            </td>
+                            <td class="user-name-cell">{{ user.UserName if user.UserName is defined else '未知用户' }}</td>
+                            <td class="points-cell">{{ user.TotalPoints }}</td>
+                            <td class="days-cell">{{ user.ValidDays if user.ValidDays is defined else 0 }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
+
+            <!-- 分页控件 -->
+            {% if total_pages is defined and total_pages > 1 %}
+            <div class="pagination">
+                <div class="pagination-info">
+                    显示第 {{ (current_page - 1) * per_page + 1 }} - {{ current_page * per_page if current_page * per_page <= total_records else total_records }} 条，共 {{ total_records }} 条记录
+                </div>
+                <div class="pagination-controls">
+                    {% if current_page > 1 %}
+                        <a href="?page=1&per_page={{ per_page }}&search_user_id={{ search_params.search_user_id if search_params else '' }}&search_user_name={{ search_params.search_user_name if search_params else '' }}&min_points={{ search_params.min_points if search_params and search_params.min_points else '' }}&max_points={{ search_params.max_points if search_params and search_params.max_points else '' }}&sort_by={{ search_params.sort_by if search_params else 'TotalPoints' }}&sort_order={{ search_params.sort_order if search_params else 'desc' }}" class="page-btn">首页</a>
+                        <a href="?page={{ current_page - 1 }}&per_page={{ per_page }}&search_user_id={{ search_params.search_user_id if search_params else '' }}&search_user_name={{ search_params.search_user_name if search_params else '' }}&min_points={{ search_params.min_points if search_params and search_params.min_points else '' }}&max_points={{ search_params.max_points if search_params and search_params.max_points else '' }}&sort_by={{ search_params.sort_by if search_params else 'TotalPoints' }}&sort_order={{ search_params.sort_order if search_params else 'desc' }}" class="page-btn">上一页</a>
+                    {% endif %}
+
+                    {% set start_page = [1, current_page - 2]|max %}
+                    {% set end_page = [total_pages + 1, current_page + 3]|min %}
+                    {% for page_num in range(start_page, end_page) %}
+                        {% if page_num == current_page %}
+                            <span class="page-btn current">{{ page_num }}</span>
+                        {% else %}
+                            <a href="?page={{ page_num }}&per_page={{ per_page }}&search_user_id={{ search_params.search_user_id if search_params else '' }}&search_user_name={{ search_params.search_user_name if search_params else '' }}&min_points={{ search_params.min_points if search_params and search_params.min_points else '' }}&max_points={{ search_params.max_points if search_params and search_params.max_points else '' }}&sort_by={{ search_params.sort_by if search_params else 'TotalPoints' }}&sort_order={{ search_params.sort_order if search_params else 'desc' }}" class="page-btn">{{ page_num }}</a>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if current_page < total_pages %}
+                        <a href="?page={{ current_page + 1 }}&per_page={{ per_page }}&search_user_id={{ search_params.search_user_id if search_params else '' }}&search_user_name={{ search_params.search_user_name if search_params else '' }}&min_points={{ search_params.min_points if search_params and search_params.min_points else '' }}&max_points={{ search_params.max_points if search_params and search_params.max_points else '' }}&sort_by={{ search_params.sort_by if search_params else 'TotalPoints' }}&sort_order={{ search_params.sort_order if search_params else 'desc' }}" class="page-btn">下一页</a>
+                        <a href="?page={{ total_pages }}&per_page={{ per_page }}&search_user_id={{ search_params.search_user_id if search_params else '' }}&search_user_name={{ search_params.search_user_name if search_params else '' }}&min_points={{ search_params.min_points if search_params and search_params.min_points else '' }}&max_points={{ search_params.max_points if search_params and search_params.max_points else '' }}&sort_by={{ search_params.sort_by if search_params else 'TotalPoints' }}&sort_order={{ search_params.sort_order if search_params else 'desc' }}" class="page-btn">末页</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+
             {% else %}
             <div class="empty-state">
                 <h3>📭 暂无积分数据</h3>

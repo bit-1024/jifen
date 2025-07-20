@@ -76,11 +76,29 @@
             border: 2px solid #e3e8ff;
         }
 
+        .user-info {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .user-name {
+            font-size: 20px;
+            color: #333;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
         .user-id {
-            font-size: 18px;
+            font-size: 14px;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .user-stats {
+            margin-top: 15px;
             color: #666;
-            margin-bottom: 15px;
-            font-weight: 500;
+            font-size: 14px;
+            text-align: center;
         }
 
         .points-section {
@@ -135,6 +153,34 @@
             font-size: 14px;
             color: #666;
             line-height: 1.5;
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px solid #ffd93d;
+            text-align: center;
+        }
+
+        .info-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .info-message {
+            font-size: 16px;
+            color: #856404;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .search-term {
+            font-size: 14px;
+            color: #6c757d;
+            font-style: italic;
+            margin-top: 10px;
         }
 
         .navigation {
@@ -215,34 +261,69 @@
 
         <div class="content">
             {% if found %}
-                <!-- 查询成功 -->
-                <div class="user-card">
-                    <div class="user-id">用户ID: {{ user_id }}</div>
-
-                    <div class="points-section">
-                        <div class="points-label">您的积分</div>
-                        <div class="points-display">{{ total_points }}</div>
-                        <div class="points-unit">积分</div>
+                {% if multiple %}
+                    <!-- 找到多个用户 -->
+                    <div class="info-card">
+                        <div class="info-icon">🔍</div>
+                        <div class="info-message">{{ message }}</div>
+                        <div class="search-term">搜索关键词: "{{ user_name }}"</div>
                     </div>
 
-                    <div style="color: #4c51bf; font-weight: 500; font-size: 16px;">
-                        恭喜！您已累计获得 {{ total_points }} 积分
+                    {% for user in users_list %}
+                    <div class="user-card">
+                        <div class="user-info">
+                            <div class="user-name">{{ user.UserName }}</div>
+                            <div class="user-id">用户ID: {{ user.UserID }}</div>
+                        </div>
+
+                        <div class="points-section">
+                            <div class="points-display">{{ user.TotalPoints }}</div>
+                            <div class="points-unit">积分</div>
+                        </div>
+
+                        <div class="user-stats">
+                            有效天数: {{ user.ValidDays }} 天
+                        </div>
                     </div>
-                </div>
+                    {% endfor %}
+                {% else %}
+                    <!-- 找到单个用户 -->
+                    <div class="user-card">
+                        <div class="user-info">
+                            <div class="user-name">{{ user_display_name }}</div>
+                            <div class="user-id">用户ID: {{ user_id }}</div>
+                        </div>
+
+                        <div class="points-section">
+                            <div class="points-label">您的积分</div>
+                            <div class="points-display">{{ total_points }}</div>
+                            <div class="points-unit">积分</div>
+                        </div>
+
+                        <div class="user-stats">
+                            <div style="color: #4c51bf; font-weight: 500; font-size: 16px;">
+                                恭喜！您已累计获得 {{ total_points }} 积分
+                            </div>
+                            <div style="color: #666; font-size: 14px; margin-top: 8px;">
+                                有效天数: {{ valid_days }} 天
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
             {% else %}
                 <!-- 查询失败或错误 -->
                 <div class="error-card">
                     <div class="error-icon">❌</div>
                     <div class="error-message">{{ error_message }}</div>
+                    <div class="search-term">搜索关键词: "{{ user_name }}"</div>
 
-                    {% if error_message == "未查询到该用户信息" %}
-                        <div class="error-description">
-                            可能的原因：<br>
-                            • 用户ID不存在<br>
-                            • 该用户未达到积分标准<br>
-                            • 数据尚未更新
-                        </div>
-                    {% endif %}
+                    <div class="error-description">
+                        可能的原因：<br>
+                        • 用户名不存在或拼写错误<br>
+                        • 该用户未达到积分标准<br>
+                        • 数据尚未更新<br>
+                        • 请尝试输入完整或部分用户名
+                    </div>
                 </div>
             {% endif %}
 
