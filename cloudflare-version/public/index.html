@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>积分管理系统 - 首页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* 主色调 - 深蓝紫色系 */
+            --primary-start: #1e3c72;
+            --primary-end: #2a5298;
+            --primary-dark: #1a2f5c;
+            --primary-light: #3d6bb3;
+
+            /* 辅助色 - 青蓝色系 */
+            --secondary-start: #00c6ff;
+            --secondary-end: #0072ff;
+            --secondary-dark: #0056cc;
+            --secondary-light: #33d1ff;
+
+            /* 强调色 - 橙粉色系 */
+            --accent-start: #ff6b6b;
+            --accent-end: #ffa726;
+            --accent-dark: #e55353;
+            --accent-light: #ff8a80;
+
+            /* 成功色 - 绿色系 */
+            --success-start: #4caf50;
+            --success-end: #8bc34a;
+            --success-dark: #388e3c;
+            --success-light: #81c784;
+
+            /* 警告色 - 黄橙色系 */
+            --warning-start: #ff9800;
+            --warning-end: #ffc107;
+            --warning-dark: #f57c00;
+            --warning-light: #ffb74d;
+
+            /* 错误色 - 红色系 */
+            --error-start: #f44336;
+            --error-end: #e91e63;
+            --error-dark: #d32f2f;
+            --error-light: #ef5350;
+
+            /* 中性色 */
+            --neutral-100: #f8fafc;
+            --neutral-200: #e2e8f0;
+            --neutral-300: #cbd5e1;
+            --neutral-400: #94a3b8;
+            --neutral-500: #64748b;
+            --neutral-600: #475569;
+            --neutral-700: #334155;
+            --neutral-800: #1e293b;
+            --neutral-900: #0f172a;
+
+            /* 渐变背景 */
+            --bg-primary: linear-gradient(135deg, var(--primary-start) 0%, var(--primary-end) 100%);
+            --bg-secondary: linear-gradient(135deg, var(--secondary-start) 0%, var(--secondary-end) 100%);
+            --bg-accent: linear-gradient(135deg, var(--accent-start) 0%, var(--accent-end) 100%);
+            --bg-success: linear-gradient(135deg, var(--success-start) 0%, var(--success-end) 100%);
+            --bg-warning: linear-gradient(135deg, var(--warning-start) 0%, var(--warning-end) 100%);
+            --bg-error: linear-gradient(135deg, var(--error-start) 0%, var(--error-end) 100%);
+
+            /* 玻璃态效果 */
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+
+            /* 阴影系统 */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+            --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.25);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 动态背景装饰 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 107, 107, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(0, 198, 255, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 主要内容区域 */
+        .main-content {
+            margin-top: 80px;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 英雄区域 */
+        .hero-section {
+            text-align: center;
+            padding: 80px 0;
+            color: white;
+        }
+
+        .hero-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .hero-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 30px;
+            background: var(--glass-bg);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(15px);
+            border: 2px solid var(--glass-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-secondary);
+            transition: left 0.4s ease;
+            z-index: -1;
+        }
+
+        .hero-button:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl);
+            color: white;
+            text-decoration: none;
+        }
+
+        .hero-button:hover::before {
+            left: 0;
+        }
+
+        .hero-button.primary {
+            background: var(--bg-accent);
+            border: 2px solid var(--accent-light);
+        }
+
+        .hero-button.primary::before {
+            background: var(--bg-warning);
+        }
+
+        .hero-button.primary:hover {
+            color: white;
+        }
+
+        /* 功能卡片区域 */
+        .features-section {
+            padding: 80px 0;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            margin: 40px 0;
+            border-radius: 30px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 50px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.4s ease;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--bg-secondary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-2xl);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-card:nth-child(1)::before { background: var(--bg-secondary); }
+        .feature-card:nth-child(2)::before { background: var(--bg-accent); }
+        .feature-card:nth-child(3)::before { background: var(--bg-success); }
+        .feature-card:nth-child(4)::before { background: var(--bg-warning); }
+        .feature-card:nth-child(5)::before { background: var(--bg-error); }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .feature-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .feature-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .feature-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: var(--bg-primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-secondary);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .feature-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            color: white;
+            text-decoration: none;
+        }
+
+        .feature-button:hover::before {
+            left: 0;
+        }
+
+        /* 为不同的功能按钮设置不同的颜色 */
+        .feature-card:nth-child(1) .feature-button { background: var(--bg-secondary); }
+        .feature-card:nth-child(2) .feature-button { background: var(--bg-accent); }
+        .feature-card:nth-child(3) .feature-button { background: var(--bg-success); }
+        .feature-card:nth-child(4) .feature-button { background: var(--bg-warning); }
+        .feature-card:nth-child(5) .feature-button { background: var(--bg-error); }
+
+        /* 二维码功能展示区域 */
+        .qr-showcase-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg,
+                rgba(0, 198, 255, 0.05) 0%,
+                rgba(0, 114, 255, 0.05) 100%);
+            position: relative;
+        }
+
+        .qr-showcase-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="qr-pattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><rect x="0" y="0" width="10" height="10" fill="rgba(0,198,255,0.1)"/><rect x="10" y="10" width="10" height="10" fill="rgba(0,198,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23qr-pattern)"/></svg>');
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .qr-showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .qr-showcase-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 2px solid rgba(0, 198, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .qr-showcase-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                transparent,
+                rgba(0, 198, 255, 0.1),
+                transparent);
+            transition: left 0.5s ease;
+        }
+
+        .qr-showcase-card:hover::before {
+            left: 100%;
+        }
+
+        .qr-showcase-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 198, 255, 0.2);
+            border-color: rgba(0, 198, 255, 0.4);
+        }
+
+        .showcase-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .qr-showcase-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: 700;
+        }
+
+        .showcase-features {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .showcase-features li {
+            padding: 8px 0;
+            color: #666;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .showcase-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #00c6ff;
+            font-weight: bold;
+        }
+
+        .showcase-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            border: 2px solid transparent;
+        }
+
+        .showcase-button.admin-button {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+        }
+
+        .showcase-button.user-button {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+        }
+
+        .showcase-button.config-button {
+            background: linear-gradient(135deg, #6f42c1, #5a32a3);
+            color: white;
+        }
+
+        .showcase-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            border-color: white;
+        }
+
+        /* 使用流程样式 - 全新设计 */
+        .qr-workflow {
+            margin-top: 80px;
+            padding: 60px 40px;
+            background: linear-gradient(135deg,
+                rgba(102, 126, 234, 0.05) 0%,
+                rgba(118, 75, 162, 0.05) 100%);
+            border-radius: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .qr-workflow::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(0, 198, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
+            animation: workflowBg 20s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes workflowBg {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+        }
+
+        .qr-workflow h3 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: 800;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .workflow-subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 50px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .workflow-container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .workflow-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .workflow-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 30px 20px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .workflow-step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                transparent,
+                rgba(0, 198, 255, 0.1),
+                transparent);
+            transition: left 0.6s ease;
+        }
+
+        .workflow-step:hover::before {
+            left: 100%;
+        }
+
+        .workflow-step:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border-color: rgba(0, 198, 255, 0.3);
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            font-weight: 800;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .step-number::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            opacity: 0;
+            transform: scale(1.2);
+            transition: all 0.3s ease;
+        }
+
+        .workflow-step:hover .step-number {
+            transform: scale(1.1);
+        }
+
+        .workflow-step:hover .step-number::after {
+            opacity: 0.3;
+            transform: scale(1.4);
+        }
+
+        .step-content h4 {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            color: #333;
+            font-weight: 700;
+        }
+
+        .step-content p {
+            color: #666;
+            font-size: 1em;
+            line-height: 1.6;
+            max-width: 180px;
+        }
+
+        /* 连接线样式 */
+        .workflow-steps::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 12.5%;
+            right: 12.5%;
+            height: 3px;
+            background: linear-gradient(90deg,
+                #667eea 0%,
+                #00c6ff 25%,
+                #764ba2 50%,
+                #00c6ff 75%,
+                #667eea 100%);
+            border-radius: 2px;
+            z-index: -1;
+            animation: flowLine 3s ease-in-out infinite;
+        }
+
+        @keyframes flowLine {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        /* 流动点动画 */
+        .workflow-steps::after {
+            content: '';
+            position: absolute;
+            top: 35px;
+            left: 12.5%;
+            width: 12px;
+            height: 12px;
+            background: #00c6ff;
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(0, 198, 255, 0.8);
+            animation: flowDot 4s linear infinite;
+        }
+
+        @keyframes flowDot {
+            0% { left: 12.5%; }
+            25% { left: 37.5%; }
+            50% { left: 62.5%; }
+            75% { left: 87.5%; }
+            100% { left: 12.5%; }
+        }
+
+        /* 统计数据区域 */
+        .stats-section {
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .stat-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 30px 20px;
+            color: white;
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--bg-secondary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .stat-card:nth-child(1)::before { background: var(--bg-secondary); }
+        .stat-card:nth-child(2)::before { background: var(--bg-accent); }
+        .stat-card:nth-child(3)::before { background: var(--bg-success); }
+        .stat-card:nth-child(4)::before { background: var(--bg-warning); }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .stat-label {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        /* 页脚 */
+        .footer {
+            background: linear-gradient(135deg, var(--neutral-800) 0%, var(--neutral-900) 100%);
+            backdrop-filter: blur(20px);
+            padding: 40px 0;
+            text-align: center;
+            color: white;
+            margin-top: 60px;
+            border-top: 1px solid var(--glass-border);
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--bg-secondary);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .footer-description {
+            opacity: 0.8;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+        }
+
+        .footer-copyright {
+            opacity: 0.6;
+            font-size: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 20px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 36px;
+            }
+
+            .hero-subtitle {
+                font-size: 18px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                padding: 0 10px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            /* 二维码展示区域响应式 */
+            .qr-showcase-section {
+                padding: 60px 0;
+            }
+
+            .qr-showcase-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                margin: 30px 0;
+            }
+
+            .qr-showcase-card {
+                padding: 30px 20px;
+            }
+
+            .showcase-icon {
+                font-size: 3em;
+            }
+
+            /* 使用流程响应式设计 */
+            .qr-workflow {
+                margin-top: 60px;
+                padding: 40px 20px;
+                border-radius: 20px;
+            }
+
+            .qr-workflow h3 {
+                font-size: 2em;
+                margin-bottom: 15px;
+            }
+
+            .workflow-subtitle {
+                font-size: 1em;
+                margin-bottom: 40px;
+            }
+
+            .workflow-steps {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .workflow-step {
+                padding: 25px 15px;
+                margin: 0 auto;
+                max-width: 300px;
+            }
+
+            .step-number {
+                width: 70px;
+                height: 70px;
+                font-size: 1.8em;
+                margin-bottom: 20px;
+            }
+
+            .step-content h4 {
+                font-size: 1.3em;
+                margin-bottom: 12px;
+            }
+
+            .step-content p {
+                font-size: 0.95em;
+                max-width: none;
+            }
+
+            /* 移动端连接线调整 */
+            .workflow-steps::before {
+                display: none;
+            }
+
+            .workflow-steps::after {
+                display: none;
+            }
+
+            /* 添加垂直连接线 */
+            .workflow-step:not(:last-child)::after {
+                content: '';
+                position: absolute;
+                bottom: -12.5px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 3px;
+                height: 25px;
+                background: linear-gradient(180deg, #667eea, #764ba2);
+                border-radius: 2px;
+            }
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 28px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 动画效果 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feature-card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .feature-card:nth-child(1) { animation-delay: 0.1s; }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; }
+        .feature-card:nth-child(4) { animation-delay: 0.4s; }
+
+        /* 滚动指示器 */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            opacity: 0.7;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">📊 积分管理系统</a>
+            <ul class="nav-links">
+                <li><a href="/query">🔍 用户查询</a></li>
+                <!-- AUTH_REQUIRED -->
+                    <li><a href="/admin/upload">📤 数据上传</a></li>
+                    <li><a href="/admin/points">📊 积分管理</a></li>
+                    <li><a href="/admin/config">⚙️ 系统配置</a></li>
+                    <li><a href="/logout" title="点击登出">👤 {{ session.user_id }}</a></li>
+                {% else %}
+                    <li><a href="/login">🔑 登录</a></li>
+                    <li><a href="/register">📝 注册</a></li>
+                <!-- /AUTH_REQUIRED -->
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <main class="main-content">
+        <div class="container">
+            <!-- 英雄区域 -->
+            <section class="hero-section">
+                <h1 class="hero-title">智能积分管理系统</h1>
+                <p class="hero-subtitle">
+                    基于直播观看时长的智能积分计算与管理平台<br>
+                    支持多种数据格式，自动识别用户信息，实时统计积分变化
+                </p>
+                <div class="hero-buttons">
+                    <a href="/query" class="hero-button primary">
+                        <span>🔍</span>
+                        <span>查询积分</span>
+                    </a>
+                    <!-- AUTH_REQUIRED -->
+                        <a href="/admin/upload" class="hero-button">
+                            <span>📤</span>
+                            <span>上传数据</span>
+                        </a>
+                        <a href="/admin/points" class="hero-button">
+                            <span>📊</span>
+                            <span>管理积分</span>
+                        </a>
+                        <a href="/admin/config" class="hero-button">
+                            <span>⚙️</span>
+                            <span>系统配置</span>
+                        </a>
+                    {% else %}
+                        <a href="/login" class="hero-button">
+                            <span>🔑</span>
+                            <span>登录管理</span>
+                        </a>
+                        <a href="/register" class="hero-button">
+                            <span>📝</span>
+                            <span>注册账户</span>
+                        </a>
+                    <!-- /AUTH_REQUIRED -->
+                </div>
+                <div class="scroll-indicator">
+                    <span style="font-size: 24px;">⬇</span>
+                </div>
+            </section>
+
+            <!-- 功能特性区域 -->
+            <section class="features-section">
+                <h2 class="section-title">核心功能</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <span class="feature-icon">🔍</span>
+                        <h3 class="feature-title">用户查询</h3>
+                        <p class="feature-description">
+                            支持按用户名模糊搜索，快速查询个人积分情况，
+                            包括总积分、有效天数等详细信息。
+                        </p>
+                        <a href="/query" class="feature-button">
+                            <span>立即查询</span>
+                            <span>→</span>
+                        </a>
+                    </div>
+
+                    <div class="feature-card">
+                        <span class="feature-icon">📤</span>
+                        <h3 class="feature-title">数据上传</h3>
+                        <p class="feature-description">
+                            支持多种文件格式上传，智能识别表头结构，
+                            自动解析用户信息和观看时长数据。
+                        </p>
+                        <a href="/admin/upload" class="feature-button">
+                            <span>上传数据</span>
+                            <span>→</span>
+                        </a>
+                    </div>
+
+                    <div class="feature-card">
+                        <span class="feature-icon">📊</span>
+                        <h3 class="feature-title">积分管理</h3>
+                        <p class="feature-description">
+                            全面的积分统计与管理功能，支持筛选、排序、
+                            分页查看，实时掌握用户积分动态。
+                        </p>
+                        <a href="/admin/points" class="feature-button">
+                            <span>管理积分</span>
+                            <span>→</span>
+                        </a>
+                    </div>
+
+                    <div class="feature-card">
+                        <span class="feature-icon">⚡</span>
+                        <h3 class="feature-title">智能计算</h3>
+                        <p class="feature-description">
+                            基于观看时长自动计算积分，支持多种时长格式，
+                            {{ validity_days if validity_days else 90 }}天有效期管理，防重复计分机制。
+                        </p>
+                        <a href="#" class="feature-button">
+                            <span>了解更多</span>
+                            <span>→</span>
+                        </a>
+                    </div>
+
+                    <div class="feature-card">
+                        <span class="feature-icon">📱</span>
+                        <h3 class="feature-title">二维码查询</h3>
+                        <p class="feature-description">
+                            管理员可生成通用二维码，用户扫码即可直接跳转查询页面，
+                            支持长期有效和自定义有效期，操作简便快捷。
+                        </p>
+                        {% if session.user_id and session.user_role == 'admin' %}
+                        <a href="/admin/points" class="feature-button">
+                            <span>生成二维码</span>
+                            <span>→</span>
+                        </a>
+                        {% else %}
+                        <a href="/query" class="feature-button">
+                            <span>扫码查询</span>
+                            <span>→</span>
+                        </a>
+                        <!-- /AUTH_REQUIRED -->
+                    </div>
+
+                    <!-- AUTH_REQUIRED -->
+                    <div class="feature-card">
+                        <span class="feature-icon">⚙️</span>
+                        <h3 class="feature-title">系统配置</h3>
+                        <p class="feature-description">
+                            灵活配置积分规则、有效时长、文件处理等参数，
+                            实时调整系统行为，无需重启应用。
+                        </p>
+                        <a href="/admin/config" class="feature-button">
+                            <span>配置管理</span>
+                            <span>→</span>
+                        </a>
+                    </div>
+                    <!-- /AUTH_REQUIRED -->
+                </div>
+            </section>
+
+            <!-- 二维码功能展示区域 -->
+            <section class="qr-showcase-section">
+                <div class="container">
+                    <h2 class="section-title">📱 二维码查询功能</h2>
+                    <p class="section-subtitle">扫码即查，便捷高效的积分查询体验</p>
+
+                    <div class="qr-showcase-grid">
+                        <div class="qr-showcase-card">
+                            <div class="showcase-icon">👨‍💼</div>
+                            <h3>管理员操作</h3>
+                            <ul class="showcase-features">
+                                <li>一键生成通用二维码</li>
+                                <li>支持长期有效设置</li>
+                                <li>可自定义有效期时长</li>
+                                <li>二维码下载和分享</li>
+                                <li>重新生成功能</li>
+                            </ul>
+                            {% if session.user_id and session.user_role == 'admin' %}
+                            <a href="/admin/points" class="showcase-button admin-button">
+                                <span>🔄</span>
+                                <span>生成二维码</span>
+                            </a>
+                            <!-- /AUTH_REQUIRED -->
+                        </div>
+
+                        <div class="qr-showcase-card">
+                            <div class="showcase-icon">👥</div>
+                            <h3>用户体验</h3>
+                            <ul class="showcase-features">
+                                <li>扫码直接跳转查询页面</li>
+                                <li>无需记忆复杂网址</li>
+                                <li>支持所有主流扫码应用</li>
+                                <li>移动端友好界面</li>
+                                <li>快速查询积分信息</li>
+                            </ul>
+                            <a href="/query" class="showcase-button user-button">
+                                <span>🔍</span>
+                                <span>积分查询</span>
+                            </a>
+                        </div>
+
+                        <div class="qr-showcase-card">
+                            <div class="showcase-icon">⚙️</div>
+                            <h3>配置管理</h3>
+                            <ul class="showcase-features">
+                                <li>灵活的有效期设置</li>
+                                <li>自动清理过期二维码</li>
+                                <li>缓存数量限制管理</li>
+                                <li>实时配置生效</li>
+                                <li>智能缓存机制</li>
+                            </ul>
+                            {% if session.user_id and session.user_role == 'admin' %}
+                            <a href="/admin/config" class="showcase-button config-button">
+                                <span>⚙️</span>
+                                <span>系统配置</span>
+                            </a>
+                            <!-- /AUTH_REQUIRED -->
+                        </div>
+                    </div>
+
+                    <div class="qr-workflow">
+                        <h3>使用流程</h3>
+                        <p class="workflow-subtitle">简单四步，轻松实现二维码积分查询</p>
+                        <div class="workflow-container">
+                            <div class="workflow-steps">
+                                <div class="workflow-step">
+                                    <div class="step-number">1</div>
+                                    <div class="step-content">
+                                        <h4>管理员生成</h4>
+                                        <p>在积分管理页面生成通用二维码，支持自定义有效期设置</p>
+                                    </div>
+                                </div>
+                                <div class="workflow-step">
+                                    <div class="step-number">2</div>
+                                    <div class="step-content">
+                                        <h4>分享二维码</h4>
+                                        <p>下载高清二维码图片，通过各种渠道分享给用户</p>
+                                    </div>
+                                </div>
+                                <div class="workflow-step">
+                                    <div class="step-number">3</div>
+                                    <div class="step-content">
+                                        <h4>用户扫码</h4>
+                                        <p>用户使用任意扫码应用扫描，直接跳转到查询页面</p>
+                                    </div>
+                                </div>
+                                <div class="workflow-step">
+                                    <div class="step-number">4</div>
+                                    <div class="step-content">
+                                        <h4>查询积分</h4>
+                                        <p>输入用户ID即可查看详细的积分信息和历史记录</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 统计数据区域 -->
+            <section class="stats-section">
+                <h2 class="section-title">系统统计</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-users">{{ stats.total_users if stats else '---' }}</div>
+                        <div class="stat-label">注册用户</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-points">{{ stats.total_points if stats else '---' }}</div>
+                        <div class="stat-label">累计积分</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="active-users">{{ stats.active_users if stats else '---' }}</div>
+                        <div class="stat-label">活跃用户</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">{{ validity_days if validity_days else 90 }}</div>
+                        <div class="stat-label">积分有效期(天)</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <h3 class="footer-title">积分管理系统</h3>
+            <p class="footer-description">
+                专业的直播积分管理解决方案，助力提升用户参与度和平台活跃度
+            </p>
+            <div class="footer-links">
+                <a href="/query">用户查询</a>
+                <!-- AUTH_REQUIRED -->
+                    <a href="/admin/upload">数据上传</a>
+                    <a href="/admin/points">积分管理</a>
+                    <a href="/admin/config">系统配置</a>
+                <!-- /AUTH_REQUIRED -->
+                <a href="#help">使用帮助</a>
+                <a href="#contact">联系我们</a>
+            </div>
+            <div class="footer-copyright">
+                <p>&copy; 2024 积分管理系统. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 数字动画效果
+        function animateNumber(element, target, duration = 2000) {
+            const start = 0;
+            const increment = target / (duration / 16);
+            let current = start;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(current);
+            }, 16);
+        }
+
+        // 页面加载完成后执行动画
+        document.addEventListener('DOMContentLoaded', function() {
+            // 如果有统计数据，执行数字动画
+            const totalUsersEl = document.getElementById('total-users');
+            const totalPointsEl = document.getElementById('total-points');
+            const activeUsersEl = document.getElementById('active-users');
+            
+            if (totalUsersEl.textContent !== '---') {
+                setTimeout(() => {
+                    animateNumber(totalUsersEl, parseInt(totalUsersEl.textContent) || 0);
+                }, 500);
+            }
+            
+            if (totalPointsEl.textContent !== '---') {
+                setTimeout(() => {
+                    animateNumber(totalPointsEl, parseInt(totalPointsEl.textContent) || 0);
+                }, 700);
+            }
+            
+            if (activeUsersEl.textContent !== '---') {
+                setTimeout(() => {
+                    animateNumber(activeUsersEl, parseInt(activeUsersEl.textContent) || 0);
+                }, 900);
+            }
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+
+    <script>
+        // Cloudflare Pages API调用
+        const API_BASE = '/api';
+        
+        // 页面类型: home
+        document.addEventListener('DOMContentLoaded', function() {
+            initCloudflarePages('home');
+        });
+    </script>
+    <script src="/js/cloudflare-adapter.js"></script>
+    
+</body>
+</html>

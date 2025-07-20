@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统配置管理 - 积分管理系统</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* 导航按钮样式 */
+        .nav-buttons {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            border-radius: 25px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            border-color: #667eea;
+        }
+
+        .nav-btn .icon {
+            font-size: 16px;
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            .nav-buttons {
+                top: 15px;
+                left: 15px;
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .nav-btn {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+
+            .nav-btn .icon {
+                font-size: 14px;
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 16px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .config-section {
+            background: #f8f9ff;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 2px solid #e3e8ff;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .config-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .config-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .config-item label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .config-item input,
+        .config-item select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .config-item input:focus,
+        .config-item select:focus {
+            outline: none;
+            border-color: #4facfe;
+            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+        }
+
+        .config-description {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+            line-height: 1.4;
+        }
+
+        .config-unit {
+            font-size: 12px;
+            color: #888;
+            margin-left: 5px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+
+        .current-value {
+            background: #e8f4fd;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #0066cc;
+            margin-top: 5px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(79, 172, 254, 0.3);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .meta-info {
+            background: #f1f3f4;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 30px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .meta-info strong {
+            color: #333;
+        }
+
+        @media (max-width: 768px) {
+            .config-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+
+        /* 二维码有效期配置样式 */
+        .validity-config {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .validity-options {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 10px 15px;
+            border: 2px solid #e3e8ff;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .radio-option:hover {
+            border-color: #4facfe;
+            background: #f8f9ff;
+        }
+
+        .radio-option input[type="radio"] {
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .radio-option input[type="radio"]:checked + span {
+            color: #4facfe;
+            font-weight: 600;
+        }
+
+        .custom-hours {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: #f8f9ff;
+            border-radius: 8px;
+            border: 1px solid #e3e8ff;
+        }
+
+        .custom-hours .config-input {
+            flex: 1;
+            max-width: 150px;
+            margin: 0;
+        }
+
+        .input-unit {
+            color: #666;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* 开关样式 */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+        }
+
+        .toggle-switch input[type="checkbox"] {
+            display: none;
+        }
+
+        .toggle-label {
+            display: block;
+            width: 50px;
+            height: 24px;
+            background: #ccc;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            position: relative;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .toggle-switch input[type="checkbox"]:checked + .toggle-label {
+            background: #4facfe;
+        }
+
+        .toggle-switch input[type="checkbox"]:checked + .toggle-label .toggle-slider {
+            transform: translateX(26px);
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航按钮 -->
+    <div class="nav-buttons">
+        <a href="javascript:history.back()" class="nav-btn" id="backBtn">
+            <span class="icon">←</span>
+            <span>返回</span>
+        </a>
+        <a href="/" class="nav-btn">
+            <span class="icon">🏠</span>
+            <span>首页</span>
+        </a>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>⚙️ 系统配置管理</h1>
+            <p>管理积分系统的各项参数配置</p>
+        </div>
+
+        <div class="content">
+            <!-- Flash 消息 -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ 'error' if category == 'error' else category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                <!-- /AUTH_REQUIRED -->
+            {% endwith %}
+
+            <form method="POST">
+                <!-- 积分系统配置 -->
+                <div class="config-section">
+                    <h2 class="section-title">
+                        🎯 {{ schema.points_system.title }}
+                    </h2>
+                    <div class="config-grid">
+                        {% for field_key, field_info in schema.points_system.fields.items() %}
+                        <div class="config-item">
+                            <label for="{{ field_key }}">{{ field_info.title }}</label>
+                            {% if field_info.type == 'boolean' %}
+                                <div class="checkbox-item">
+                                    <input type="checkbox" 
+                                           id="{{ field_key }}" 
+                                           name="{{ field_key }}"
+                                           {{ 'checked' if config.points_system[field_key] else '' }}>
+                                    <span>{{ field_info.description }}</span>
+                                </div>
+                            {% else %}
+                                <input type="{{ field_info.type }}" 
+                                       id="{{ field_key }}" 
+                                       name="{{ field_key }}"
+                                       value="{{ config.points_system[field_key] }}"
+                                       min="{{ field_info.min if field_info.min is defined else '' }}"
+                                       max="{{ field_info.max if field_info.max is defined else '' }}"
+                                       required>
+                                <div class="config-description">
+                                    {{ field_info.description }}
+                                    {% if field_info.unit %}<span class="config-unit">({{ field_info.unit }})</span><!-- /AUTH_REQUIRED -->
+                                </div>
+                            <!-- /AUTH_REQUIRED -->
+                            <div class="current-value">
+                                当前值: {{ config.points_system[field_key] }}
+                                {% if field_info.unit and field_info.type != 'boolean' %}{{ field_info.unit }}<!-- /AUTH_REQUIRED -->
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- 数据处理配置 -->
+                <div class="config-section">
+                    <h2 class="section-title">
+                        📊 {{ schema.data_processing.title }}
+                    </h2>
+                    <div class="config-grid">
+                        {% for field_key, field_info in schema.data_processing.fields.items() %}
+                        <div class="config-item">
+                            <label for="{{ field_key }}">{{ field_info.title }}</label>
+                            <input type="{{ field_info.type }}" 
+                                   id="{{ field_key }}" 
+                                   name="{{ field_key }}"
+                                   value="{{ config.data_processing[field_key] }}"
+                                   min="{{ field_info.min if field_info.min is defined else '' }}"
+                                   max="{{ field_info.max if field_info.max is defined else '' }}"
+                                   required>
+                            <div class="config-description">
+                                {{ field_info.description }}
+                                {% if field_info.unit %}<span class="config-unit">({{ field_info.unit }})</span><!-- /AUTH_REQUIRED -->
+                            </div>
+                            <div class="current-value">
+                                当前值: {{ config.data_processing[field_key] }}
+                                {% if field_info.unit %}{{ field_info.unit }}<!-- /AUTH_REQUIRED -->
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- 显示配置 -->
+                <div class="config-section">
+                    <h2 class="section-title">
+                        🖥️ {{ schema.display.title }}
+                    </h2>
+                    <div class="config-grid">
+                        {% for field_key, field_info in schema.display.fields.items() %}
+                        <div class="config-item">
+                            <label for="{{ field_key }}">{{ field_info.title }}</label>
+                            <input type="{{ field_info.type }}" 
+                                   id="{{ field_key }}" 
+                                   name="{{ field_key }}"
+                                   value="{{ config.display[field_key] }}"
+                                   min="{{ field_info.min if field_info.min is defined else '' }}"
+                                   max="{{ field_info.max if field_info.max is defined else '' }}"
+                                   required>
+                            <div class="config-description">
+                                {{ field_info.description }}
+                                {% if field_info.unit %}<span class="config-unit">({{ field_info.unit }})</span><!-- /AUTH_REQUIRED -->
+                            </div>
+                            <div class="current-value">
+                                当前值: {{ config.display[field_key] }}
+                                {% if field_info.unit %}{{ field_info.unit }}<!-- /AUTH_REQUIRED -->
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- 二维码系统配置 -->
+                <div class="config-section">
+                    <h2 class="section-title">
+                        📱 {{ schema.qr_system.title }}
+                    </h2>
+                    <div class="config-grid">
+                        {% for field_key, field_info in schema.qr_system.fields.items() %}
+                        <div class="form-group">
+                            <label for="{{ field_key }}" class="config-label">
+                                {{ field_info.title }}
+                            </label>
+
+                            {% if field_key == 'validity_hours' %}
+                                <!-- 特殊处理有效期配置 -->
+                                <div class="validity-config">
+                                    <div class="validity-options">
+                                        <label class="radio-option">
+                                            <input type="radio"
+                                                   name="validity_type"
+                                                   value="custom"
+                                                   id="validity_custom"
+                                                   {% if config.qr_system[field_key] != -1 %}checked<!-- /AUTH_REQUIRED -->>
+                                            <span>自定义有效期</span>
+                                        </label>
+                                        <label class="radio-option">
+                                            <input type="radio"
+                                                   name="validity_type"
+                                                   value="permanent"
+                                                   id="validity_permanent"
+                                                   {% if config.qr_system[field_key] == -1 %}checked<!-- /AUTH_REQUIRED -->>
+                                            <span>长期有效</span>
+                                        </label>
+                                    </div>
+
+                                    <div class="custom-hours" id="custom_hours_group"
+                                         style="{% if config.qr_system[field_key] == -1 %}display: none;<!-- /AUTH_REQUIRED -->">
+                                        <input type="number"
+                                               id="{{ field_key }}"
+                                               name="{{ field_key }}"
+                                               value="{{ config.qr_system[field_key] if config.qr_system[field_key] != -1 else 24 }}"
+                                               min="{{ field_info.min if field_info.min is defined else '' }}"
+                                               max="{{ field_info.max if field_info.max is defined else '' }}"
+                                               class="config-input">
+                                        <span class="input-unit">小时</span>
+                                    </div>
+
+                                    <!-- 隐藏字段用于提交长期有效的值 -->
+                                    <input type="hidden"
+                                           id="validity_hours_hidden"
+                                           name="validity_hours_final"
+                                           value="{{ config.qr_system[field_key] }}">
+                                </div>
+
+                            {% elif field_info.type == 'boolean' %}
+                                <div class="toggle-switch">
+                                    <input type="checkbox"
+                                           id="{{ field_key }}"
+                                           name="{{ field_key }}"
+                                           {% if config.qr_system[field_key] %}checked<!-- /AUTH_REQUIRED -->>
+                                    <label for="{{ field_key }}" class="toggle-label">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+
+                            {% else %}
+                                <input type="number"
+                                       id="{{ field_key }}"
+                                       name="{{ field_key }}"
+                                       value="{{ config.qr_system[field_key] }}"
+                                       class="config-input"
+                                       min="{{ field_info.min if field_info.min is defined else '' }}"
+                                       max="{{ field_info.max if field_info.max is defined else '' }}"
+                                       required>
+                            <!-- /AUTH_REQUIRED -->
+
+                            <div class="config-description">
+                                {{ field_info.description }}
+                                {% if field_info.unit and field_key != 'validity_hours' %}
+                                    <span class="config-unit">({{ field_info.unit }})</span>
+                                <!-- /AUTH_REQUIRED -->
+                            </div>
+                            <div class="current-value">
+                                {% if field_key == 'validity_hours' %}
+                                    当前值: {% if config.qr_system[field_key] == -1 %}长期有效{% else %}{{ config.qr_system[field_key] }} 小时<!-- /AUTH_REQUIRED -->
+                                {% elif field_info.type == 'boolean' %}
+                                    当前值: {% if config.qr_system[field_key] %}启用{% else %}禁用<!-- /AUTH_REQUIRED -->
+                                {% else %}
+                                    当前值: {{ config.qr_system[field_key] }}
+                                    {% if field_info.unit %}{{ field_info.unit }}<!-- /AUTH_REQUIRED -->
+                                <!-- /AUTH_REQUIRED -->
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- 按钮组 -->
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">
+                        💾 保存配置
+                    </button>
+                    <a href="/admin/upload" class="btn btn-secondary">
+                        🔙 返回管理
+                    </a>
+                </div>
+            </form>
+
+            <!-- 配置元信息 -->
+            <div class="meta-info">
+                <strong>配置信息:</strong><br>
+                版本: {{ config.meta.version }} | 
+                最后更新: {{ config.meta.last_updated }} | 
+                更新者: {{ config.meta.updated_by }}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 二维码有效期配置JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            const customRadio = document.getElementById('validity_custom');
+            const permanentRadio = document.getElementById('validity_permanent');
+            const customHoursGroup = document.getElementById('custom_hours_group');
+            const validityHoursInput = document.getElementById('validity_hours');
+            const validityHoursHidden = document.getElementById('validity_hours_hidden');
+
+            // 切换有效期类型
+            function toggleValidityType() {
+                if (permanentRadio && permanentRadio.checked) {
+                    // 长期有效
+                    if (customHoursGroup) {
+                        customHoursGroup.style.display = 'none';
+                    }
+                    if (validityHoursHidden) {
+                        validityHoursHidden.value = -1;
+                    }
+                } else {
+                    // 自定义有效期
+                    if (customHoursGroup) {
+                        customHoursGroup.style.display = 'flex';
+                    }
+                    if (validityHoursInput && validityHoursHidden) {
+                        validityHoursHidden.value = validityHoursInput.value || 24;
+                    }
+                }
+            }
+
+            // 监听单选按钮变化
+            if (customRadio) {
+                customRadio.addEventListener('change', toggleValidityType);
+            }
+            if (permanentRadio) {
+                permanentRadio.addEventListener('change', toggleValidityType);
+            }
+
+            // 监听自定义小时数变化
+            if (validityHoursInput) {
+                validityHoursInput.addEventListener('input', function() {
+                    if (validityHoursHidden && customRadio && customRadio.checked) {
+                        validityHoursHidden.value = this.value;
+                    }
+                });
+            }
+
+            // 表单提交时处理有效期值
+            const configForm = document.querySelector('form');
+            if (configForm) {
+                configForm.addEventListener('submit', function(e) {
+                    console.log('表单提交，处理有效期配置...');
+
+                    if (permanentRadio && permanentRadio.checked) {
+                        console.log('选择了长期有效');
+                        // 长期有效，确保validity_type被正确设置
+                        let validityTypeField = document.querySelector('input[name="validity_type"][value="permanent"]');
+                        if (!validityTypeField) {
+                            validityTypeField = document.createElement('input');
+                            validityTypeField.type = 'hidden';
+                            validityTypeField.name = 'validity_type';
+                            validityTypeField.value = 'permanent';
+                            this.appendChild(validityTypeField);
+                        }
+
+                        // 设置validity_hours为-1
+                        if (validityHoursHidden) {
+                            validityHoursHidden.value = -1;
+                        }
+                    } else if (customRadio && customRadio.checked) {
+                        console.log('选择了自定义有效期');
+                        // 自定义有效期，确保validity_type被正确设置
+                        let validityTypeField = document.querySelector('input[name="validity_type"][value="custom"]');
+                        if (!validityTypeField) {
+                            validityTypeField = document.createElement('input');
+                            validityTypeField.type = 'hidden';
+                            validityTypeField.name = 'validity_type';
+                            validityTypeField.value = 'custom';
+                            this.appendChild(validityTypeField);
+                        }
+
+                        // 设置validity_hours为输入的值
+                        if (validityHoursInput && validityHoursHidden) {
+                            validityHoursHidden.value = validityHoursInput.value || 24;
+                        }
+                    }
+                });
+            }
+
+            // 初始化状态
+            toggleValidityType();
+        });
+
+        // 配置保存成功提示
+        function showSaveSuccess() {
+            const alerts = document.querySelectorAll('.alert-success');
+            alerts.forEach(alert => {
+                alert.style.animation = 'slideIn 0.5s ease-out';
+                setTimeout(() => {
+                    alert.style.animation = 'fadeOut 0.5s ease-out';
+                    setTimeout(() => {
+                        alert.remove();
+                    }, 500);
+                }, 3000);
+            });
+        }
+
+        // 页面加载时检查是否有成功消息
+        document.addEventListener('DOMContentLoaded', function() {
+            const successAlerts = document.querySelectorAll('.alert-success');
+            if (successAlerts.length > 0) {
+                showSaveSuccess();
+            }
+        });
+    </script>
+
+    <script>
+        // Cloudflare Pages API调用
+        const API_BASE = '/api';
+        
+        // 页面类型: admin
+        document.addEventListener('DOMContentLoaded', function() {
+            initCloudflarePages('admin');
+        });
+    </script>
+    <script src="/js/cloudflare-adapter.js"></script>
+    
+</body>
+</html>

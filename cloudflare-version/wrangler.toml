@@ -1,0 +1,40 @@
+name = "points-management-system"
+compatibility_date = "2024-01-15"
+pages_build_output_dir = "public"
+
+# D1 Database binding
+[[d1_databases]]
+binding = "DB"
+database_name = "points-management-db"
+database_id = "your-database-id-here"
+
+# KV namespace for sessions and cache
+[[kv_namespaces]]
+binding = "SESSIONS"
+id = "your-kv-namespace-id-here"
+preview_id = "your-preview-kv-namespace-id-here"
+
+[[kv_namespaces]]
+binding = "CACHE"
+id = "your-cache-kv-namespace-id-here"
+preview_id = "your-cache-preview-kv-namespace-id-here"
+
+# Environment variables
+[env.production.vars]
+ENVIRONMENT = "production"
+SECRET_KEY = "your-secret-key-here"
+ADMIN_PASSWORD_HASH = "your-admin-password-hash-here"
+
+[env.preview.vars]
+ENVIRONMENT = "preview"
+SECRET_KEY = "preview-secret-key"
+ADMIN_PASSWORD_HASH = "preview-admin-password-hash"
+
+# Functions configuration
+[functions]
+directory = "functions"
+
+# Build configuration (optional, for static assets)
+[build]
+command = "echo 'No build required for static files'"
+cwd = "."

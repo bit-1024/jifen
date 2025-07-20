@@ -1,0 +1,44 @@
+{
+  "name": "points-management-cloudflare",
+  "version": "1.0.0",
+  "description": "积分查询系统 - Cloudflare Pages版本",
+  "main": "index.js",
+  "scripts": {
+    "dev": "wrangler pages dev public --compatibility-date=2024-01-15",
+    "deploy": "wrangler pages deploy public --project-name=points-management-system",
+    "db:init": "wrangler d1 execute points-management-db --file=./schema.sql",
+    "db:query": "wrangler d1 execute points-management-db --command",
+    "db:list": "wrangler d1 list",
+    "kv:list": "wrangler kv:namespace list",
+    "logs": "wrangler pages deployment tail",
+    "build": "echo 'No build step required for static files'",
+    "test": "echo 'No tests specified'",
+    "setup": "node setup.js"
+  },
+  "keywords": [
+    "cloudflare",
+    "pages",
+    "functions",
+    "d1",
+    "kv",
+    "points",
+    "management",
+    "system"
+  ],
+  "author": "Points Management System",
+  "license": "MIT",
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/points-management-system.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/points-management-system/issues"
+  },
+  "homepage": "https://points-management-system.pages.dev"
+}
